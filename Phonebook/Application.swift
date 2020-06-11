@@ -27,12 +27,12 @@ class Application {
             }
         }
         
-    func write() {
+    func writeMessage(recipients: [String], delegate: MFMessageComposeViewControllerDelegate) {
         if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-//            mail.mailComposeDelegate = self
-            mail.setToRecipients(["you@yoursite.com"])
-            mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
+            let messageVC = MFMessageComposeViewController()
+            messageVC.body = "Message String"
+            messageVC.recipients = [] // Optionally add some tel numbers
+            messageVC.messageComposeDelegate = delegate
             
             let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
@@ -41,7 +41,7 @@ class Application {
                     topController = presentedViewController
                 }
 
-                topController.present(mail, animated: true)
+                topController.present(messageVC, animated: true)
             }
         } else {
             print("Error write")

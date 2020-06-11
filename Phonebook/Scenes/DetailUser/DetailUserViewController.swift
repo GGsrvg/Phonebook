@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 import Domain
 import Dante
 
@@ -14,6 +15,7 @@ class DetailUserViewController: BaseViewController<DetailUserView, DetailUserVie
 
     init(_ user: User) {
         super.init(user)
+        _viewModel.delegateMessage = self
     }
     
     required init(coder: NSCoder) {
@@ -23,14 +25,22 @@ class DetailUserViewController: BaseViewController<DetailUserView, DetailUserVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _view?.userFaceImageView.loadImage(_viewModel.user.picture.large)
+        _view?.userFaceImageView.loadImage(_viewModel.imagePath)
         
-        _view?.fullNameLabel.text = "\(_viewModel.user.name.last) \(_viewModel.user.name.first)"
-        _view?.phoneLabel.text = _viewModel.user.phone
-        _view?.mailLabel.text = _viewModel.user.email
+        _view?.fullNameLabel.text = "\(_viewModel.lastName) \(_viewModel.firstName)"
+        _view?.phoneLabel.text = _viewModel.phoneNumber
+        _view?.mailLabel.text = _viewModel.email
         
         _view?.callButton.addTarget(_viewModel, action: #selector(_viewModel.call), for: .touchUpInside)
         _view?.writeButton.addTarget(_viewModel, action: #selector(_viewModel.write), for: .touchUpInside)
     }
+    
+}
+
+extension DetailUserViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
     
 }
