@@ -17,9 +17,9 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
     
     private var cancellableSearchTextField: AnyCancellable?
 
-    private let searchController =  UISearchController()
+    private let searchController =  UISearchController(searchResultsController: nil)
     
-    private var users: [User] = [User]()
+    private var users: [User] = []
     
     private var isFirstLoad = true
     
@@ -27,6 +27,10 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Find user"
+        searchController.searchBar.delegate = self
+        
         navigationItem.searchController = searchController
         
         self.setTableViewSettings()
@@ -48,6 +52,10 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
     private func publishedUsers(){
         cancellablePublishedUsers?.cancel()
         cancellablePublishedUsers = _viewModel.$publishedUsers.sink() { data in
+            
+            self.users.removeAll()
+            self._view?.tableView.reloadData()
+            
             self.users = data
             self._view?.tableView.reloadData()
         }
@@ -58,12 +66,11 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
      After 500 milliseconds, the method is called to get users by name
     */
     private func bindingSearchTextField() {
-        cancellableSearchTextField?.cancel()
         cancellableSearchTextField = NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object: searchController.searchBar.searchTextField)
-            .map( { ($0.object as! UITextField).text } )
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .receive(on: RunLoop.main)
+            .compactMap { $0.object as? UISearchTextField }
+            .map { $0.text ?? "" }
             .sink(receiveCompletion: { complete in
 
             }, receiveValue: { value in
@@ -106,4 +113,10 @@ extension ListUsersViewController: UITableViewDelegate, UITableViewDataSource {
         self.goToDetail(indexPath.row)
     }
     
+}
+
+extension ListUsersViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self._viewModel.loadUsers(name: nil)
+    }
 }

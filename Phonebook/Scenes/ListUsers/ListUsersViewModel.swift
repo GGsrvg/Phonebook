@@ -40,8 +40,7 @@ class ListUsersViewModel: BaseViewModel {
     
     
     func loadUsers(name: String?){
-        cancellable?.cancel()
-        cancellable = Application.shared.network.getUsers(name: name)
+        let _ = Application.shared.network.getUsers(name: name)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { complete in
                 switch complete{

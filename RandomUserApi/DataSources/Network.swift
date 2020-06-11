@@ -42,9 +42,10 @@ final public class Network: Domain.Network {
         let response = request(getParams: "")
             .decode(type: Domain.Response.self, decoder: JSONDecoder())
             .map {
-                $0.results
+                return $0.results
             }
             .eraseToAnyPublisher()
+        
         
         sub = response
             .receive(on: DispatchQueue.main)
@@ -59,27 +60,24 @@ final public class Network: Domain.Network {
             }, receiveValue: {
                 self.users = $0
             })
-        
+//
         return response
     }
     
-    public func getUsers(name: String?) -> AnyPublisher<[User], Error> {
+    public func getUsers(name: String?) -> Future<[User], Error> {
         
-        return Just(self.users)
-            .setFailureType(to: Error.self)
-            .map {
-                if name == nil || name == "" {
-                    return $0
-                } else {
-                    let lowerCaseName = name!.lowercased()
-                    
-                    return $0.filter({
-                        "\($0.name.last.lowercased()) \($0.name.first.lowercased())".contains(lowerCaseName)
-                    })
-                }
+        return Future<[User], Error> { promise in
+            if name == nil || name == "" {
+                promise(.success(self.users))
+            } else {
+                let lowerCaseName = name!.lowercased()
+
+                let _users = self.users.filter({
+                    "\($0.name.last.lowercased()) \($0.name.first.lowercased())".contains(lowerCaseName)
+                })
+                
+                promise(.success(_users))
             }
-            .eraseToAnyPublisher()
+        }
     }
-    
-    
 }
