@@ -15,31 +15,51 @@ public extension UIImageView {
     }
 }
 
+// images cache
+// Url address : UIImage
+var memoryImageCache: [String: UIImage] = [:]
 
 fileprivate func imageLoad(_ imagePath: String, to imageView: UIImageView){
+    // remove image
     imageView.image = nil
     
-    let _ = Future<URL, Error>.init({ promise in
-        if let url = URL(string: imagePath) {
-            promise(.success(url))
-        }
-        promise(.failure(LoadingError.loading(reason: "Url equail nil")))
-    })
-    .subscribe(on: DispatchQueue.global(qos: .background))
-    .tryMap({ url in
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
-                return image
-            }
-        }
-        throw LoadingError.loading(reason: "Data or UIImage equail nil")
-    })
-    .receive(on: RunLoop.main)
-    .sink(receiveCompletion: { error in
-        
-    }, receiveValue: { image in
+    // check have image on memory
+    if let image = memoryImageCache[imagePath] {
+        // use image from memory
         imageView.image = image
-    })
+    } else {
+        // load image
+        let _ = Future<URL, Error>.init({ promise in
+                // check image path
+                if let url = URL(string: imagePath) {
+                    // pass on
+                    promise(.success(url))
+                }
+                // if path incorrect
+                promise(.failure(LoadingError.loading(reason: "Url equail nil")))
+            })
+            // switch to background thread
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            // map from Url to UIImage
+            // otherwise giwean error
+            .tryMap({ url in
+                if let data = try? Data(contentsOf: url) {
+                    if let image = UIImage(data: data) {
+                        memoryImageCache[imagePath] = image
+                        return image
+                    }
+                }
+                throw LoadingError.loading(reason: "Data or UIImage equail nil")
+            })
+            // switch to main thread
+            .receive(on: RunLoop.main)
+            // set UIImage in UIImageView
+            .sink(receiveCompletion: { error in
+                
+            }, receiveValue: { image in
+                imageView.image = image
+            })
+    }
 }
 
 
