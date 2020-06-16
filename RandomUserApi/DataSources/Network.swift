@@ -62,6 +62,11 @@ final public class Network: Domain.Network {
             .map {
                 return $0.results ?? []
             }
+            .map { (users) -> [User] in
+                let sortedUsers: [User] = users.sorted { (firstUser, secondUser) -> Bool in
+                    "\(firstUser.name?.first ?? "") \(firstUser.name?.last ?? "")" < "\(secondUser.name?.first ?? "") \(secondUser.name?.last ?? "")" }
+                return sortedUsers
+            }
             .eraseToAnyPublisher()
         
         

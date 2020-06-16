@@ -30,7 +30,7 @@ class UserViewCell: UITableViewCell {
     func setData(imageUrl: String, firstName: String, lastName: String, secondName: String){
         naturalImageView.loadImage(imageUrl)
         
-        nameLabel.text = "\(lastName) \(firstName) \(secondName)"
+        nameLabel.text = "\(firstName) \(lastName) \(secondName)"
     }
     
 }
