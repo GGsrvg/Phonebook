@@ -10,6 +10,6 @@ import Foundation
 
 public struct Info: Codable {
     public let seed: String
-    public let results, page: Int
-    public let version: String
+    public let results, page: Int?
+    public let version: String?
 }

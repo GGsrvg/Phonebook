@@ -9,5 +9,5 @@
 import Foundation
 
 public struct Picture: Codable {
-    public let large, medium, thumbnail: String
+    public let large, medium, thumbnail: String?
 }

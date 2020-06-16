@@ -9,6 +9,6 @@
 import Foundation
 
 public struct Response: Codable {
-    public let results: [User]
-    public let info: Info
+    public let results: [User]?
+    public let info: Info?
 }

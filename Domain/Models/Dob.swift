@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Dob: Codable {
-    public let date: String
-    public let age: Int
+    public let date: String?
+    public let age: Int?
 }
   

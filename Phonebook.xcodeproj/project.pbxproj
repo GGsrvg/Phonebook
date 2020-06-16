@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B1832F12497F71A002817FC /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1832F02497F71A002817FC /* MemoryCache.swift */; };
 		5B273618248FC99B0006CD06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273617248FC99B0006CD06 /* AppDelegate.swift */; };
 		5B27361A248FC99B0006CD06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273619248FC99B0006CD06 /* SceneDelegate.swift */; };
 		5B273621248FC99C0006CD06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B273620248FC99C0006CD06 /* Assets.xcassets */; };
@@ -19,7 +20,7 @@
 		5B27364A248FCA2B0006CD06 /* RandomUserApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B273642248FCA2B0006CD06 /* RandomUserApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B273651248FCB640006CD06 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273650248FCB640006CD06 /* Response.swift */; };
 		5B273653248FCB780006CD06 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273652248FCB780006CD06 /* Info.swift */; };
-		5B273655248FCB8C0006CD06 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273654248FCB8C0006CD06 /* Result.swift */; };
+		5B273655248FCB8C0006CD06 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273654248FCB8C0006CD06 /* User.swift */; };
 		5B273657248FCBA50006CD06 /* Dob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B273656248FCBA50006CD06 /* Dob.swift */; };
 		5B27365B248FCC350006CD06 /* NameClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B27365A248FCC350006CD06 /* NameClass.swift */; };
 		5B27365D248FCC6E0006CD06 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B27365C248FCC6E0006CD06 /* Picture.swift */; };
@@ -106,6 +107,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B1832F02497F71A002817FC /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		5B273614248FC99B0006CD06 /* Phonebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phonebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B273617248FC99B0006CD06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B273619248FC99B0006CD06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,7 +122,7 @@
 		5B273645248FCA2B0006CD06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B273650248FCB640006CD06 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		5B273652248FCB780006CD06 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
-		5B273654248FCB8C0006CD06 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		5B273654248FCB8C0006CD06 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5B273656248FCBA50006CD06 /* Dob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dob.swift; sourceTree = "<group>"; };
 		5B27365A248FCC350006CD06 /* NameClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameClass.swift; sourceTree = "<group>"; };
 		5B27365C248FCC6E0006CD06 /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
@@ -182,6 +184,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B1832EF2497F70A002817FC /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				5B1832F02497F71A002817FC /* MemoryCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		5B27360B248FC99B0006CD06 = {
 			isa = PBXGroup;
 			children = (
@@ -248,7 +258,7 @@
 			children = (
 				5B273650248FCB640006CD06 /* Response.swift */,
 				5B273652248FCB780006CD06 /* Info.swift */,
-				5B273654248FCB8C0006CD06 /* Result.swift */,
+				5B273654248FCB8C0006CD06 /* User.swift */,
 				5B273656248FCBA50006CD06 /* Dob.swift */,
 				5B27365A248FCC350006CD06 /* NameClass.swift */,
 				5B27365C248FCC6E0006CD06 /* Picture.swift */,
@@ -344,6 +354,7 @@
 		5B273690248FE9B00006CD06 /* Dante */ = {
 			isa = PBXGroup;
 			children = (
+				5B1832EF2497F70A002817FC /* Cache */,
 				5B273691248FE9B00006CD06 /* Dante.h */,
 				5B273692248FE9B00006CD06 /* Info.plist */,
 				5B27369B248FE9D80006CD06 /* Dante.swift */,
@@ -578,7 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B27365D248FCC6E0006CD06 /* Picture.swift in Sources */,
-				5B273655248FCB8C0006CD06 /* Result.swift in Sources */,
+				5B273655248FCB8C0006CD06 /* User.swift in Sources */,
 				5B27365B248FCC350006CD06 /* NameClass.swift in Sources */,
 				5B27365F248FCD9F0006CD06 /* Network.swift in Sources */,
 				5B273657248FCBA50006CD06 /* Dob.swift in Sources */,
@@ -601,6 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B27369C248FE9D80006CD06 /* Dante.swift in Sources */,
+				5B1832F12497F71A002817FC /* MemoryCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

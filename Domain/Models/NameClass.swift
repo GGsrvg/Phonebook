@@ -9,5 +9,5 @@
 import Foundation
 
 public struct NameClass: Codable {
-    public let title, first, last: String
+    public let title, first, last: String?
 }

@@ -17,14 +17,15 @@ public extension UIImageView {
 
 // images cache
 // Url address : UIImage
-var memoryImageCache: [String: UIImage] = [:]
+let memoryCache = MemoryCache()
+//var memoryImageCache: [String: UIImage] = [:]
 
 fileprivate func imageLoad(_ imagePath: String, to imageView: UIImageView){
     // remove image
     imageView.image = nil
     
     // check have image on memory
-    if let image = memoryImageCache[imagePath] {
+    if let image = memoryCache.get(imagePath) {
         // use image from memory
         imageView.image = image
     } else {
@@ -45,7 +46,7 @@ fileprivate func imageLoad(_ imagePath: String, to imageView: UIImageView){
             .tryMap({ url in
                 if let data = try? Data(contentsOf: url) {
                     if let image = UIImage(data: data) {
-                        memoryImageCache[imagePath] = image
+                        memoryCache.append(key: imagePath, value: image)
                         return image
                     }
                 }
