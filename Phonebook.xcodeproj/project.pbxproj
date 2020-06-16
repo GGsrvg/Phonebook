@@ -46,6 +46,7 @@
 		5B2736BB24914B540006CD06 /* DetailUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2736BA24914B540006CD06 /* DetailUserViewController.swift */; };
 		5B2736BD24914B5E0006CD06 /* DetailUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2736BC24914B5E0006CD06 /* DetailUserView.swift */; };
 		5B2736BF24914B6D0006CD06 /* DetailUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2736BE24914B6D0006CD06 /* DetailUserViewModel.swift */; };
+		5B55FFF5249947EB0096E479 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5B55FFF4249947EB0096E479 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,7 @@
 		5B2736BA24914B540006CD06 /* DetailUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserViewController.swift; sourceTree = "<group>"; };
 		5B2736BC24914B5E0006CD06 /* DetailUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserView.swift; sourceTree = "<group>"; };
 		5B2736BE24914B6D0006CD06 /* DetailUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserViewModel.swift; sourceTree = "<group>"; };
+		5B55FFF4249947EB0096E479 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 		5B27360B248FC99B0006CD06 = {
 			isa = PBXGroup;
 			children = (
+				5B55FFF4249947EB0096E479 /* README.md */,
 				5B273616248FC99B0006CD06 /* Phonebook */,
 				5B273631248FCA0F0006CD06 /* Domain */,
 				5B273643248FCA2B0006CD06 /* RandomUserApi */,
@@ -533,6 +536,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B55FFF5249947EB0096E479 /* README.md in Resources */,
 				5B2736B924909F500006CD06 /* DetailUserView.xib in Resources */,
 				5B273624248FC99C0006CD06 /* LaunchScreen.storyboard in Resources */,
 				5B27367F248FDC800006CD06 /* ListUsersView.xib in Resources */,
