@@ -22,11 +22,11 @@ class DetailUserViewModel: BaseViewModel {
     
     required init(_ data: Any?) {
         if let user = data as? User {
-            imagePath = user.picture.large
-            firstName = user.name.first
-            lastName = user.name.last
-            phoneNumber = user.phone
-            email = user.email
+            imagePath = user.picture?.large ?? ""
+            firstName = user.name?.first ?? ""
+            lastName = user.name?.last ?? ""
+            phoneNumber = user.phone ?? ""
+            email = user.email ?? ""
         } else {
             fatalError("Its no user type")
         }

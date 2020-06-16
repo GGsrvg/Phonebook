@@ -12,7 +12,7 @@ class MemoryCache {
     private var items: [String: UIImage] = [:]
     
     // MARK: setting
-    private var _count: Int = 40
+    private var _count: Int = 189
     
     public var Count: Int {
         get { return _count }

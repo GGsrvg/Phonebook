@@ -13,13 +13,9 @@ import Combine
 
 class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewModel> {
     
-    private var cancellablePublishedUsers: AnyCancellable?
-    
-    private var cancellableSearchTextField: AnyCancellable?
+    private var cancellableSet: Set<AnyCancellable> = []
 
     private let searchController =  UISearchController(searchResultsController: nil)
-    
-    private var users: [User] = []
     
     private var isFirstLoad = true
     
@@ -35,7 +31,6 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
         
         self.setTableViewSettings()
         self.bindingSearchTextField()
-        self.publishedUsers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,39 +38,34 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
         
         if isFirstLoad {
             self._viewModel.loadUsers()
+            self.bindingTableView()
             
             isFirstLoad = false
         }
     }
     
-    // MARK: gets new users and then reload tableView
-    private func publishedUsers(){
-        cancellablePublishedUsers?.cancel()
-        cancellablePublishedUsers = _viewModel.$publishedUsers.sink() { data in
-            
-            self.users.removeAll()
-            self._view?.tableView.reloadData()
-            
-            self.users = data
-            self._view?.tableView.reloadData()
-        }
-    }
     
     // MARK: binding on searchTextField
     /*
      After 500 milliseconds, the method is called to get users by name
     */
     private func bindingSearchTextField() {
-        cancellableSearchTextField = NotificationCenter.default
+        NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object: searchController.searchBar.searchTextField)
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .compactMap { $0.object as? UISearchTextField }
             .map { $0.text ?? "" }
-            .sink(receiveCompletion: { complete in
-
-            }, receiveValue: { value in
-                self._viewModel.loadUsers(name: value)
-            })
+            .assign(to: \.publishedUserName, on: _viewModel)
+            .store(in: &cancellableSet)
+    }
+    
+    private func bindingTableView(){
+        _viewModel.$publishedUsers
+            .receive(on: DispatchQueue.main)
+            .sink { (users) in
+                self._view?.tableView.reloadData()
+            }
+            .store(in: &cancellableSet)
     }
     
     // MARK: customizes TableView
@@ -89,21 +79,22 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
     
     // MARK: open detail user view
     private func goToDetail(_ index: Int){
-        let vc = DetailUserViewController(users[index])
-        navigationController?.pushViewController(vc, animated: true)
+//        let vc = DetailUserViewController(users[index])
+//        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension ListUsersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        print("count: \(_viewModel.publishedUsers.count)")
+        return _viewModel.publishedUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserViewCell", for: indexPath) as! UserViewCell
-        let item = users[indexPath.row]
+        let item = _viewModel.publishedUsers[indexPath.row]
         
-        cell.setData(imageUrl: item.picture.medium, firstName: item.name.first, lastName: item.name.last, secondName: "")
+        cell.setData(imageUrl: item.picture?.medium ?? "", firstName: item.name?.first ?? "", lastName: item.name?.last ?? "", secondName: "")
         
         return cell
     }
@@ -117,6 +108,6 @@ extension ListUsersViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ListUsersViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self._viewModel.loadUsers(name: nil)
+        self._viewModel.publishedUserName = ""
     }
 }

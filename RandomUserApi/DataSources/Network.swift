@@ -18,6 +18,8 @@ final public class Network: Domain.Network {
     
     private var users: [User] = []
     
+    public init(){}
+    
     private func absoluteUrl(queryParams: [String: String]? = nil) -> URL? {
         let queryURL = URL(string: apiURL)!
         let components = URLComponents(url: queryURL, resolvingAgainstBaseURL: true)
@@ -81,20 +83,22 @@ final public class Network: Domain.Network {
         return response
     }
     
-    public func getUsers(name: String?) -> Future<[User], Error> {
+    public func getUsers(name: String?) -> AnyPublisher<[User], Never> {
         
-        return Future<[User], Error> { promise in
-            if name == nil || name == "" {
-                promise(.success(self.users))
-            } else {
-                let lowerCaseName = name!.lowercased()
+        return Just(name)
+            .map { promise in
+                if name == nil || name == "" {
+                    return self.users
+                } else {
+                    let lowerCaseName = name!.lowercased()
 
-                let _users = self.users.filter({
-                    "\($0.name?.last?.lowercased() ?? "") \($0.name?.first?.lowercased() ?? "")".contains(lowerCaseName)
-                })
-                
-                promise(.success(_users))
+                    let _users = self.users.filter({
+                        "\($0.name?.last?.lowercased() ?? "") \($0.name?.first?.lowercased() ?? "")".contains(lowerCaseName)
+                    })
+                    
+                    return _users
+                }
             }
-        }
+            .eraseToAnyPublisher()
     }
 }

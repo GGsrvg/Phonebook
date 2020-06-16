@@ -11,5 +11,5 @@ import Combine
 
 public protocol Network {
     func getUsers() -> AnyPublisher<[User], Error>
-    func getUsers(name: String?) -> Future<[User], Error>
+    func getUsers(name: String?) -> AnyPublisher<[User], Never>
 }
