@@ -38,6 +38,7 @@ class MemoryCache {
             items.removeValue(forKey: firstKey)
         }
         
+        // FIXME: Thread Exception
         self.items[key] = value
     }
     
