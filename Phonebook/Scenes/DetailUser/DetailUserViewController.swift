@@ -27,7 +27,7 @@ class DetailUserViewController: BaseViewController<DetailUserView, DetailUserVie
         
         _view?.userFaceImageView.loadImage(_viewModel.imagePath)
         
-        _view?.fullNameLabel.text = "\(_viewModel.lastName) \(_viewModel.firstName)"
+        _view?.fullNameLabel.text = "\(_viewModel.firstName) \(_viewModel.lastName)"
         _view?.phoneLabel.text = _viewModel.phoneNumber
         _view?.mailLabel.text = _viewModel.email
         

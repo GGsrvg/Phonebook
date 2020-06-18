@@ -64,7 +64,7 @@ final public class Network: Domain.Network {
             }
             .map { (users) -> [User] in
                 let sortedUsers: [User] = users.sorted { (firstUser, secondUser) -> Bool in
-                    "\(firstUser.name?.first ?? "") \(firstUser.name?.last ?? "")" < "\(secondUser.name?.first ?? "") \(secondUser.name?.last ?? "")" }
+                    firstUser.name?.fullName().lowercased() ?? "" < secondUser.name?.fullName().lowercased() ?? "" }
                 return sortedUsers
             }
             .eraseToAnyPublisher()
@@ -98,7 +98,7 @@ final public class Network: Domain.Network {
                     let lowerCaseName = name!.lowercased()
 
                     let _users = self.users.filter({
-                        "\($0.name?.last?.lowercased() ?? "") \($0.name?.first?.lowercased() ?? "")".contains(lowerCaseName)
+                        ($0.name?.fullName().lowercased() ?? "").contains(lowerCaseName)
                     })
                     
                     return _users

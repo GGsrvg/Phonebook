@@ -79,8 +79,8 @@ class ListUsersViewController: BaseViewController<ListUsersView, ListUsersViewMo
     
     // MARK: open detail user view
     private func goToDetail(_ index: Int){
-//        let vc = DetailUserViewController(users[index])
-//        navigationController?.pushViewController(vc, animated: true)
+        let vc = DetailUserViewController(_viewModel.publishedUsers[index])
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
